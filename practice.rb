@@ -27,3 +27,27 @@ blockchain = [
 # Anthony's KelloggCoin balance is 2650
 
 # 👇👇👇 Your code HERE 👇👇👇
+
+# Initialize an empty hash to track user balances
+wallets = {}
+
+# Process each transaction in the blockchain
+blockchain.each do |transaction|
+  from_user = transaction["from_user"]
+  to_user = transaction["to_user"]
+  amount = transaction["amount"]
+
+  # Deduct from the sender's wallet if it's not from ICO
+  if from_user
+    wallets[from_user] = wallets.fetch(from_user, 0) - amount
+  end
+
+  # Add to the recipient's wallet
+    wallets[to_user] = wallets.fetch(to_user, 0) + amount
+end
+
+# Print the final balances
+wallets.each do |user, balance|
+  puts "#{user.capitalize}'s KelloggCoin balance is #{balance}"
+end
+
